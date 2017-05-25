@@ -1,0 +1,84 @@
+1.Extract ../Src/caffe-ssd.zip to ~/
+2.Install Cuda Toolkit
+Code:$sudo ./1.install_cuda_toolkit.sh
+3.Install cuDNN
+Code:$./2.install_cudnn.sh 
+(Restart Computer)
+4.Install Debs for caffe
+Code:$./3.install_debs.sh 
+(Restart Computer)
+5.Set Environment Variable
+Code:
+	$gedit ~/.bashrc
+	#(Add the following lines to the bottom line of ~/.bashrc file-----------------------------------
+	#  export CUDA_HOME=/usr/local/cuda-8.0
+	#  export PATH=$CUDA_HOME/bin:$PATH
+	#  export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH
+	#  export CAFFE_SSD_ROOT=/home/frank/caffe-ssd
+	#  export PYTHONPATH=$CAFFE_SSD_ROOT/python:$PYTHONPATH					    	  		---------------------------------------------------------------------------------------------		
+	$source ~/.bashrc
+
+6.Modify Makefile.config according to your Caffe installation.Then Change IT
+Code:
+	$cd $CAFFE_SSD_ROOT
+	$cp Makefile.config.example Makefile.config
+	$gedit Makefile.config
+	#USE_CUDNN := 1 --> 
+		USE_CUDNN := 1(uncomment USE_CUDNN)
+	#BLAS := atlas -->
+		BLAS := atlas(uncomment)
+	INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include --> 
+		INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial(add path to include_dirs)
+	$gedit Makefile
+	LIBRARIES += glog gflags protobuf boost_system boost_filesystem boost_regex m hdf5_hl hdf5--->
+		LIBRARIES += glog gflags protobuf boost_system boost_filesystem boost_regex m hdf5_serial_hl hdf5_serial
+		(change hdf5 to hdf5_serial)
+	
+7.Build Caffe
+Code:
+
+	$make -j8
+	# Make sure to include $CAFFE_SSD_ROOT/python to your PYTHONPATH.
+	$make py
+	$make test -j8
+	# (Optional)
+	$make runtest -j8
+8.Preparation
+Code:
+	$cd ~/caffe-ssd/data
+	$tar -xvf ~/Src/VOCtrainval_11-May-2012.tar && tar -xvf ~/Src/VOCtrainval_06-Nov-2007.tar && tar -xvf ~/Src/VOCtest_06-Nov-2007.tar
+	$gedit VOC0712/create_list.sh
+	#(root_dir=$HOME/data/VOCdevkit/ -->
+		   $HOME/caffe-ssd/data/VOCdevkit/)
+	$./VOC0712/create_list.sh
+	$gedit VOC0712/create_data.sh
+	#(data_root_dir="$HOME/data/VOCdevkit" --> 
+			"$HOME/caffe-ssd/data/VOCdevkit")
+	$./VOC0712/create_data.sh
+9.SSD-TEST
+	$cd ~/caffe-ssd
+	$tar -xvf ~/Src/models_VGGNet_VOC0712_SSD_300x300.tar.gz
+	$gedit models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt
+	(output_directory: "/home-2/wliu/data/VOCdevkit/results/VOC2007/SSD_300x300/Main" --> 
+			   "/home/frank/caffe-ssd/data/VOCdevkit/results/VOC2007/SSD_300x300/Main")
+	 
+	#if you wanna test caffe-ssd-weiliu89 image mode
+	$./build/examples/ssd/ssd_detect.bin models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_120000.caffemodel ~/data/image_list.txt -confidence_threshold 0.3
+	#if you wanna test caffe-ssd-weiliu89 video mode
+	$./build/examples/ssd/ssd_detect.bin models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_120000.caffemodel ~/data/video_list.txt -confidence_threshold 0.3 -file_type video
+	
+	$python examples/ssd/ssd_pascal_video.py 
+	$cp ~/Guide/ssd_detect.cpp example/ssd
+	$make all -j8
+	#######create label file
+	$cp ~/Guide/conver_labels.py data/VOC0712
+	$python data/VOC0712/conver_labels.py
+	$cp data/VOC0712/labels.txt ~/data/labels-voc0712.txt
+	#if you wanna test caffe-ssd-aghagol image mode
+	$./build/examples/ssd/ssd_detect.bin models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_120000.caffemodel ~/data/labels-voc0712.txt ~/data/image_list.txt -confidence_threshold 0.3
+	#if you wanna test caffe-ssd-aghagol video mode
+	$./build/examples/ssd/ssd_detect.bin models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_120000.caffemodel ~/data/labels-voc0712.txt ~/data/video_list.txt -confidence_threshold 0.3  -file_type video
+
+10.Train/Eval
+	
+

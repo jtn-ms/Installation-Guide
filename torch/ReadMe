@@ -1,0 +1,20 @@
+install	
+http://torch.ch/docs/getting-started.html
+	
+src	
+https://github.com/torch/nn
+https://github.com/nicholas-leonard/dpnn
+	
+guide
+http://www.cnblogs.com/darkknightzh/p/5653864.html
+http://www.linuxdiyf.com/linux/22238.html
+https://github.com/luarocks/luarocks/issues/94
+http://deepdish.io/2015/02/20/local-torch-installation/
+
+luarocks
+luarocks install torch
+luarocks install nn
+luarocks install dpnn
+luarocks install cutorch
+luarocks install loadcaffe
+

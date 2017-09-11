@@ -26,6 +26,12 @@ then
 	echo "2.Run Installation File. Tips: Type :q to escape from seeing License. Then type accept/yes And/Or Enter."
 	sudo sh cuda_8.0.44_linux.run
 fi
+
+#
+sudo mv /usr/lib/nvidia-375/libEGL.so.1 /usr/lib/nvidia-375/libEGL.so.1.org
+sudo mv /usr/lib32/nvidia-375/libEGL.so.1 /usr/lib32/nvidia-375/libEGL.so.1.org
+sudo ln -s /usr/lib/nvidia-375/libEGL.so.375.39 /usr/lib/nvidia-375/libEGL.so.1
+sudo ln -s /usr/lib32/nvidia-375/libEGL.so.375.39 /usr/lib32/nvidia-375/libEGL.so.1
 #3.set link
 sudo cp /usr/local/cuda-8.0/lib64/libcudart.so.8.0 $lib_dir/libcudart.so.8.0 && sudo ldconfig
 sudo cp /usr/local/cuda-8.0/lib64/libcublas.so.8.0 $lib_dir/libcublas.so.8.0 && sudo ldconfig

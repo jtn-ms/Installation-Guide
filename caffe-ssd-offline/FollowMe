@@ -34,7 +34,7 @@ Code:
 		LIBRARIES += glog gflags protobuf boost_system boost_filesystem boost_regex m hdf5_serial_hl hdf5_serial
 		(change hdf5 to hdf5_serial)
 	
-7.Build Caffe
+7.Build Caffe[http://caffe.berkeleyvision.org/install_apt.html]
 Code:
 
 	$make -j8

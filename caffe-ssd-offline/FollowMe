@@ -34,16 +34,18 @@ Code:
 		LIBRARIES += glog gflags protobuf boost_system boost_filesystem boost_regex m hdf5_serial_hl hdf5_serial
 		(change hdf5 to hdf5_serial)
 	
-7.Build Caffe[http://caffe.berkeleyvision.org/install_apt.html]
+7.PreInstall[http://caffe.berkeleyvision.org/install_apt.html]
+	sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
+	sudo apt-get install --no-install-recommends libboost-all-dev
+8.Build Caffe[https://github.com/weiliu89/caffe/tree/ssd]
 Code:
-
 	$make -j8
 	# Make sure to include $CAFFE_SSD_ROOT/python to your PYTHONPATH.
 	$make py
 	$make test -j8
 	# (Optional)
 	$make runtest -j8
-8.Preparation
+9.Preparation
 Code:
 	$cd ~/caffe-ssd/data
 	$tar -xvf ~/Src/VOCtrainval_11-May-2012.tar && tar -xvf ~/Src/VOCtrainval_06-Nov-2007.tar && tar -xvf ~/Src/VOCtest_06-Nov-2007.tar
@@ -55,7 +57,7 @@ Code:
 	#(data_root_dir="$HOME/data/VOCdevkit" --> 
 			"$HOME/caffe-ssd/data/VOCdevkit")
 	$./VOC0712/create_data.sh
-9.SSD-TEST
+10.SSD-TEST
 	$cd ~/caffe-ssd
 	$tar -xvf ~/Src/models_VGGNet_VOC0712_SSD_300x300.tar.gz
 	$gedit models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt
@@ -79,6 +81,6 @@ Code:
 	#if you wanna test caffe-ssd-aghagol video mode
 	$./build/examples/ssd/ssd_detect.bin models/VGGNet/VOC0712/SSD_300x300/deploy.prototxt models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_120000.caffemodel ~/data/labels-voc0712.txt ~/data/video_list.txt -confidence_threshold 0.3  -file_type video
 
-10.Train/Eval
+11.Train/Eval
 	
 

@@ -29,6 +29,8 @@ Code:
 		BLAS := atlas(uncomment)
 	INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include --> 
 		INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial(add path to include_dirs)
+	LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib -->
+		LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial
 	$gedit Makefile
 	LIBRARIES += glog gflags protobuf boost_system boost_filesystem boost_regex m hdf5_hl hdf5--->
 		LIBRARIES += glog gflags protobuf boost_system boost_filesystem boost_regex m hdf5_serial_hl hdf5_serial

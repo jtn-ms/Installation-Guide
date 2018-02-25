@@ -10,9 +10,9 @@ include_dir=/usr/local/include
 #cudnn_lib_file_name=libcudnn.so.5.1.5
 #cuddn_ln_file_name=libcudnn.so.5
 
-cudnn_file_name=cudnn-8.0-linux-x64-v6.0.tgz
-cudnn_lib_file_name=libcudnn.so.6.0.21
-cuddn_ln_file_name=libcudnn.so.6
+cudnn_file_name=cudnn-8.0-linux-x64-v5.1.tgz#cudnn-8.0-linux-x64-v6.0.tgz
+cudnn_lib_file_name=libcudnn.so.5.1.10#libcudnn.so.6.0.21
+cuddn_ln_file_name=libcudnn.so.5#libcudnn.so.6
 
 tar xvf $cudnn_file_name
 cd cuda/include

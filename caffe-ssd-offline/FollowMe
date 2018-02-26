@@ -41,6 +41,7 @@ Code:
 	sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev libopenblas-dev
 	sudo apt-get install --no-install-recommends libboost-all-dev
 	sudo apt-get install python-numpy python-opencv
+	sudo apt-get install python-wxgtk3.0 python-wxtools
 	sudo apt-get update
 	sudo apt-get upgrade
 8.Build Caffe[https://github.com/weiliu89/caffe/tree/ssd]

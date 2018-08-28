@@ -22,5 +22,5 @@ sudo cp lib* $lib_dir/
 cd $lib_dir
 sudo chmod +r $cudnn_lib_file_name
 sudo ln -sf $cudnn_lib_file_name $cuddn_ln_file_name
-sudo ln -sf $cuddn_ln_file_name libcudnn.so
+sudo ln -sf $cudnn_ln_file_name libcudnn.so
 sudo ldconfig	
